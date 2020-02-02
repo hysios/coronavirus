@@ -26,7 +26,7 @@ services:
         environment: 
             - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel"
     corenlp:
-        image: corenlp:dev
+        image: hysios/corenlp:dev
         ports:
             - "9001:9001"
 volumes: 
