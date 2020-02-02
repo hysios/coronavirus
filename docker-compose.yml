@@ -1,0 +1,35 @@
+version: "3.6"
+services: 
+    app:
+        build:
+            context: ./
+
+    influxdb:
+        image: influxdb:1.7.6
+        volumes: 
+            - influxdata:/var/lib/influxdb
+        ports:
+            - "8086:8086"
+    grafana:
+        image: grafana/grafana:5.4.3
+        volumes: 
+            - grafana-data:/var/lib/grafana
+            - grafana-plugins:/var/lib/grafana/plugins
+        ports:
+            - "3000:3000"
+        environment: 
+            - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel"
+    elastic:
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.8.6
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        volumes:
+            - elastic-data:/usr/share/elasticsearch/data
+        environment:
+            - "discovery.type=single-node"
+volumes: 
+    influxdata:
+    grafana-data:
+    grafana-plugins:
+    elastic-data:

@@ -1,0 +1,7 @@
+{
+    "highlight-bad-chars.additionalUnicodeChars": [
+        "\u000A",
+        "\u200F"
+    ],
+    "editor.formatOnSave": true,
+}
