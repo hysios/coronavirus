@@ -91,7 +91,7 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 INFLUXDB = {
-    'host': 'localhost',
+    'host': 'influxdb',
     'port': 8086,
     'username': '',
     'password': '',
@@ -101,4 +101,8 @@ INFLUXDB = {
 ELASTIC = {
     'hosts': ['localhost'],
     'port': 9200,
+}
+
+PYPPETEER_LAUNCH = {
+    'args': ['--no-sandbox'],
 }

@@ -20,21 +20,21 @@ class CoronavirusPipeline(object):
         self.client = InfluxDBClient(
             INFLUXDB['host'], INFLUXDB['port'], INFLUXDB['username'], INFLUXDB['password'], INFLUXDB['database'])
 
-        self.esClient = Elasticsearch(ELASTIC['hosts'], port=ELASTIC['port'])
+        # self.esClient = Elasticsearch(ELASTIC['hosts'], port=ELASTIC['port'])
 
-        self.esClient.indices.create(index="ncov2019", ignore=400, body={
-            "mappings": {
-                "properties": {
-                    "location": {
-                        "type": "geo_point"
-                    },
-                    "@timestamp": {
-                        "format": "strict_date_optional_time||epoch_millis",
-                        "type": "date",
-                    },
-                }
-            }
-        })
+        # self.esClient.indices.create(index="ncov2019", ignore=400, body={
+        #     "mappings": {
+        #         "properties": {
+        #             "location": {
+        #                 "type": "geo_point"
+        #             },
+        #             "@timestamp": {
+        #                 "format": "strict_date_optional_time||epoch_millis",
+        #                 "type": "date",
+        #             },
+        #         }
+        #     }
+        # })
 
     def process_item(self, item, spider):
         if isinstance(item, SnapshotItem):
@@ -67,24 +67,24 @@ class CoronavirusPipeline(object):
         }]
 
         self.client.write_points(measurements)
-        loc = item.gps()
-        doc = {
-            'dead': item['dead'],
-            'suspect': item['suspect'],
-            'confirmed': item['confirmed'],
-            'name': item['name'],
-            'cure': item['cure'],
-            "time": item['updatedDate'],
-            '@timestamp': time,
-        }
+        # loc = item.gps()
+        # doc = {
+        #     'dead': item['dead'],
+        #     'suspect': item['suspect'],
+        #     'confirmed': item['confirmed'],
+        #     'name': item['name'],
+        #     'cure': item['cure'],
+        #     "time": item['updatedDate'],
+        #     '@timestamp': time,
+        # }
 
-        if loc is not None:
-            doc['location'] = {
-                "lat": loc[0],
-                "lon": loc[1]
-            }
+        # if loc is not None:
+        #     doc['location'] = {
+        #         "lat": loc[0],
+        #         "lon": loc[1]
+        #     }
 
-        self.esClient.index(index="ncov2019", body=doc)
+        # self.esClient.index(index="ncov2019", body=doc)
 
     def process_event(self, item, spider):
         measurements = [{

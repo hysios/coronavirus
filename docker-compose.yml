@@ -2,8 +2,14 @@ version: "3.6"
 services: 
     app:
         build:
-            context: ./
-
+            context: .
+            dockerfile: Dockerfile
+            cache_from:
+                - ncov2019scrapy:dev
+        # volumes: 
+        #     - ./:/usr/src/app            
+        ports:
+            - "6800:6800"
     influxdb:
         image: influxdb:1.7.6
         volumes: 
@@ -19,17 +25,12 @@ services:
             - "3000:3000"
         environment: 
             - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel"
-    elastic:
-        image: docker.elastic.co/elasticsearch/elasticsearch:6.8.6
+    corenlp:
+        image: corenlp:dev
         ports:
-            - "9200:9200"
-            - "9300:9300"
-        volumes:
-            - elastic-data:/usr/share/elasticsearch/data
-        environment:
-            - "discovery.type=single-node"
+            - "9001:9001"
 volumes: 
     influxdata:
     grafana-data:
     grafana-plugins:
-    elastic-data:
+    # elastic-data:
