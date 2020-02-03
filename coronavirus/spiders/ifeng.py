@@ -15,7 +15,7 @@ def cint(s):
     return 0 if not s else int(s)
 
 
-def snapshot(ss, parent=None, name=None):
+def snapshot(ss, region=None, name=None):
     return SnapshotItem(
         dead=cint(ss["siwang"]),
         confirmed=cint(ss["quezhen"]),
@@ -24,7 +24,7 @@ def snapshot(ss, parent=None, name=None):
         lastReporter=ss["sys_publisher"],
         updatedDate=dateparse(ss["sys_publishDateTime"]),
         name=name or ss["name2"],
-        parent=parent
+        region=region
     )
 
 
@@ -55,14 +55,14 @@ class IfengSpider(scrapy.Spider):
 
         # print(data)
         for ss in snapshots:
-            yield snapshot(ss, name=ss["name1"])
+            yield snapshot(ss, region=ss["name1"], name=ss["name1"])
 
             # print(ss["child"])
             if not ss.__contains__("child"):
                 continue
 
             for child in ss["child"]:
-                yield snapshot(child, parent=ss["name1"])
+                yield snapshot(child, region=ss["name1"])
         # yield data
 
         for ev in events:

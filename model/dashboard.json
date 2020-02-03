@@ -1,0 +1,579 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": "-- Grafana --",
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 1,
+    "iteration": 1580720788269,
+    "links": [],
+    "panels": [
+        {
+            "circleMaxSize": 30,
+            "circleMinSize": 2,
+            "colors": [
+                "#eab839",
+                "#f29191",
+                "#ea6460",
+                "#e24d42",
+                "#58140c"
+            ],
+            "datasource": "InfluxDB",
+            "decimals": 0,
+            "esGeoPoint": "geohash",
+            "esLocationName": "city",
+            "esMetric": "count",
+            "gridPos": {
+                "h": 14,
+                "w": 14,
+                "x": 0,
+                "y": 0
+            },
+            "hideEmpty": false,
+            "hideZero": false,
+            "id": 10,
+            "initialZoom": 1,
+            "jsonUrl": "http://localhost:8000/location.json",
+            "links": [],
+            "locationData": "table",
+            "mapCenter": "SE Asia",
+            "mapCenterLatitude": 10,
+            "mapCenterLongitude": 106,
+            "maxDataPoints": 1,
+            "mouseWheelZoom": false,
+            "showLegend": true,
+            "stickyLabels": false,
+            "tableQueryOptions": {
+                "geohashField": "geohash",
+                "labelField": "city",
+                "latitudeField": "latitude",
+                "longitudeField": "longitude",
+                "metricField": "metric",
+                "queryType": "geohash"
+            },
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "groupBy": [
+                        {
+                            "params": [
+                                "geohash"
+                            ],
+                            "type": "tag"
+                        },
+                        {
+                            "params": [
+                                "city"
+                            ],
+                            "type": "tag"
+                        }
+                    ],
+                    "hide": false,
+                    "measurement": "snapshots",
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "query": "SELECT count(\"confirmed\")  as \"$tag_city\" FROM \"snapshots\" WHERE $timeFilter GROUP BY  \"city\" ",
+                    "rawQuery": false,
+                    "refId": "A",
+                    "resultFormat": "table",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "confirmed"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [
+                                    "metric"
+                                ],
+                                "type": "alias"
+                            }
+                        ]
+                    ],
+                    "tags": [
+                        {
+                            "key": "region",
+                            "operator": "=~",
+                            "value": "/^$region$/"
+                        }
+                    ],
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": "0,10,100,1000",
+            "title": "全国疫情",
+            "transparent": false,
+            "type": "grafana-worldmap-panel",
+            "unitPlural": "",
+            "unitSingle": "",
+            "unitSingular": "",
+            "valueName": "total"
+        },
+        {
+            "columns": [],
+            "datasource": "InfluxDB",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 18,
+                "w": 10,
+                "x": 14,
+                "y": 0
+            },
+            "id": 8,
+            "links": [],
+            "pageSize": 10,
+            "scroll": false,
+            "showHeader": true,
+            "sort": {
+                "col": 0,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "decimals": 2,
+                    "pattern": "/.*/",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "groupBy": [],
+                    "measurement": "events",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "refId": "A",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "summary"
+                                ],
+                                "type": "field"
+                            }
+                        ]
+                    ],
+                    "tags": []
+                }
+            ],
+            "title": "实时报告",
+            "transform": "timeseries_to_columns",
+            "type": "table"
+        },
+        {
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "fill": 1,
+            "gridPos": {
+                "h": 9,
+                "w": 14,
+                "x": 0,
+                "y": 14
+            },
+            "id": 4,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "alias": "",
+                    "groupBy": [
+                        {
+                            "params": [
+                                "$__interval"
+                            ],
+                            "type": "time"
+                        },
+                        {
+                            "params": [
+                                "city"
+                            ],
+                            "type": "tag"
+                        },
+                        {
+                            "params": [
+                                "linear"
+                            ],
+                            "type": "fill"
+                        }
+                    ],
+                    "measurement": "snapshots",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "refId": "A",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "confirmed"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "last"
+                            },
+                            {
+                                "params": [
+                                    "确诊"
+                                ],
+                                "type": "alias"
+                            }
+                        ],
+                        [
+                            {
+                                "params": [
+                                    "suspect"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "last"
+                            },
+                            {
+                                "params": [
+                                    "疑似"
+                                ],
+                                "type": "alias"
+                            }
+                        ]
+                    ],
+                    "tags": [
+                        {
+                            "key": "region",
+                            "operator": "=~",
+                            "value": "/^$region$/"
+                        }
+                    ]
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "感染趋势",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "InfluxDB",
+            "fill": 1,
+            "gridPos": {
+                "h": 9,
+                "w": 14,
+                "x": 0,
+                "y": 23
+            },
+            "id": 2,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "groupBy": [
+                        {
+                            "params": [
+                                "$__interval"
+                            ],
+                            "type": "time"
+                        },
+                        {
+                            "params": [
+                                "linear"
+                            ],
+                            "type": "fill"
+                        }
+                    ],
+                    "measurement": "scrapy_spiders",
+                    "orderByTime": "ASC",
+                    "policy": "default",
+                    "refId": "A",
+                    "resultFormat": "time_series",
+                    "select": [
+                        [
+                            {
+                                "params": [
+                                    "response_bytes"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "mean"
+                            }
+                        ],
+                        [
+                            {
+                                "params": [
+                                    "elapsed_time_in_seconds"
+                                ],
+                                "type": "field"
+                            },
+                            {
+                                "params": [],
+                                "type": "mean"
+                            }
+                        ]
+                    ],
+                    "tags": []
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "爬虫状态",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "transparent": false,
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        }
+    ],
+    "refresh": false,
+    "schemaVersion": 16,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": [
+            {
+                "allValue": null,
+                "current": {
+                    "text": "湖南",
+                    "value": "湖南"
+                },
+                "datasource": "InfluxDB",
+                "definition": "SHOW TAG VALUES ON \"ncov2019\" WITH KEY = \"region\"",
+                "hide": 0,
+                "includeAll": false,
+                "label": "区域",
+                "multi": false,
+                "name": "region",
+                "options": [],
+                "query": "SHOW TAG VALUES ON \"ncov2019\" WITH KEY = \"region\"",
+                "refresh": 2,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "tagValuesQuery": "",
+                "tags": [],
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            },
+            {
+                "allValue": null,
+                "current": {
+                    "text": "湖南",
+                    "value": "湖南"
+                },
+                "datasource": "InfluxDB",
+                "definition": "SHOW TAG VALUES ON \"ncov2019\" WITH KEY = \"city\"",
+                "hide": 2,
+                "includeAll": false,
+                "label": "城市",
+                "multi": false,
+                "name": "city",
+                "options": [],
+                "query": "SHOW TAG VALUES ON \"ncov2019\" WITH KEY = \"city\"",
+                "refresh": 2,
+                "regex": "",
+                "skipUrlSync": false,
+                "sort": 0,
+                "tagValuesQuery": "",
+                "tags": [],
+                "tagsQuery": "",
+                "type": "query",
+                "useTags": false
+            }
+        ]
+    },
+    "time": {
+        "from": "now-7d",
+        "to": "now"
+    },
+    "timepicker": {
+        "refresh_intervals": [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ],
+        "time_options": [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+        ]
+    },
+    "timezone": "",
+    "title": "China 2019-nCoV",
+    "uid": "6VccvR8Wz",
+    "version": 47
+}

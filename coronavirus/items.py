@@ -10,17 +10,6 @@ import geohash
 
 from coronavirus.amap import AMap
 
-# siwang: ""
-# quezhen: "120"
-# sys_publishDateTime: "2020-01-25 15:14:45"
-# name2: ""
-# name1: "福建"
-# yisi: ""
-# sys_NewAdd: true
-# zhiyu: ""
-# sys_publisher: "郑鹏"
-# child: (9) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-
 
 class SnapshotItem(scrapy.Item):
     dead = scrapy.Field()
@@ -31,7 +20,7 @@ class SnapshotItem(scrapy.Item):
     name = scrapy.Field()
     lastReporter = scrapy.Field()
     childrens = scrapy.Field()
-    parent = scrapy.Field()
+    region = scrapy.Field()
     amap = AMap()
 
     def geohash(self):

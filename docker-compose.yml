@@ -6,8 +6,8 @@ services:
             dockerfile: Dockerfile
             cache_from:
                 - ncov2019scrapy:dev
-        # volumes: 
-        #     - ./:/usr/src/app            
+        volumes: 
+            - ./coronavirus:/usr/src/app/coronavirus          
         ports:
             - "6800:6800"
     influxdb:
