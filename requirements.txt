@@ -62,7 +62,7 @@ tqdm==4.42.0
 Twisted==18.9.0
 tzlocal==2.0.0
 unwrapper==1.0.0
-urllib3==1.24.3
+urllib3==1.26.5
 w3lib==1.21.0
 websockets==8.1
 zope.interface==4.7.1
