@@ -22,7 +22,7 @@ influxdb==5.2.3
 jellyfish==0.7.2
 jieba3k==0.35.1
 jsonlike==0.0.2
-lxml==4.5.0
+lxml==4.9.1
 newspaper3k==0.2.8
 nltk==3.4.5
 numpy==1.18.1
